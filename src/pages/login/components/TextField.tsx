@@ -1,9 +1,9 @@
 import { ChangeEventHandler } from "react";
 
-export default function TextField(value: string, onValueChanged: ChangeEventHandler<HTMLInputElement>) {
+export default function TextField(value: string, onValueChanged: ((arg: string) => null)) {
     return (
         <>
-            <input className="form-controll" value={value} onChange={onValueChanged}></input>
+            <input value={value} onChange={val => {onValueChanged(val.target.value)}}></input>
         </>
     )
 }
