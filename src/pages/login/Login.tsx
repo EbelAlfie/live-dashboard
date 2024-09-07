@@ -6,7 +6,7 @@ export default function LoginScreen() {
 
     return (
         <>
-        
+            <h1>HOREE</h1>
         </>
     )
 }
