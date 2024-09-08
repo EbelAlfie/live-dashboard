@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "./component/header/app-bar.css"
 import "./component/text.css"
 import "./pages/login/login.css"
+import "./pages/login/components/label.css"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

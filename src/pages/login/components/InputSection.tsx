@@ -39,7 +39,7 @@ export default function InputSection() {
 							<div className="row m-2">
 								<TextField inputLabel="Password" text={password} onTextChange={(arg: string) => {setPassword(arg)}}/>
 							</div>
-							<div className="row">
+							<div className="row m-3">
 								<button type="submit" className="btn btn-primary">Submit</button>
 							</div>
 						</form>
