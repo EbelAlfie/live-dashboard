@@ -31,19 +31,19 @@ export default function InputSection() {
 
     return (
 			<>
-				<div className="col d-flex justify-content-center align-items-center">
+				<section className="col d-flex justify-content-center align-items-center">
 						<form onSubmit={GoToDashboard}>
 							<div className="row m-2">
 								<TextField inputLabel="User Name" text={userName} onTextChange={(arg: string) => {setUserName(arg)}}/>
 							</div>
 							<div className="row m-2">
-								<TextField inputLabel="Password" text={password} onTextChange={(arg: string) => {setPassword(arg)}}/>
+								<TextField type="password" inputLabel="Password" text={password} onTextChange={(arg: string) => {setPassword(arg)}}/>
 							</div>
 							<div className="row m-3">
 								<button type="submit" className="btn btn-primary">Submit</button>
 							</div>
 						</form>
-				</div>
+				</section>
 			</>
     )
 } 

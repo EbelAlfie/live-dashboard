@@ -6,11 +6,11 @@ interface TextFieldProp extends React.DetailedHTMLProps<React.InputHTMLAttribute
     onTextChange: ((arg: string) => void)
 }
 
-const TextField: React.FC<TextFieldProp> = ({inputLabel, text, onTextChange}) => {
+const TextField: React.FC<TextFieldProp> = (props) => {
     return (
         <div className="form">
-            <label className="label-default form-label" htmlFor="form-input">{inputLabel}</label>
-            <input id="form-input" className="form-control" value={text} onChange={val => {onTextChange(val.target.value)}}></input>
+            <label className="label-default form-label" htmlFor="form-input">{props.inputLabel}</label>
+            <input id="form-input" type={props.type} className={`form-control`} value={props.text} onChange={val => {props.onTextChange(val.target.value)}}></input>
         </div>
      ) 
 } 
