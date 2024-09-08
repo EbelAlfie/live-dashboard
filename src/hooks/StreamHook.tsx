@@ -1,29 +1,30 @@
-import { useLocation } from "react-router-dom"
 import { UserResponse } from "stream-chat"
 import { useCreateChatClient } from "stream-chat-react"
-import { StreamVideo, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
 import { UserModel } from "../model/UserModel"
+import { StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
 
-const useStreamClient = (userData: UserModel) => {
+const useStreamClient = (user: UserModel) => {
     let chatUser: UserResponse = {
-        id: userData.name,
-        username: userData.name
+        id: user.id,
+        username: user.name
     }
     let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
-    
+    let token: string = process.env.REACT_APP_CACING_TOKEN || ""
+
     let chatClient = useCreateChatClient({
         apiKey: apiKey,
-        tokenOrProvider: null,
+        tokenOrProvider: token,
         userData: chatUser
     })
 
     let videoUser: UserRequest = {
-        id: userData.name,
-        name: userData.name
+        id: user.name,
+        name: user.name
     }
-    let videoClient = new StreamVideoClient({
+    let videoClient = StreamVideoClient.getOrCreateInstance({
         apiKey: apiKey,
-        user: videoUser,
+        token: token,
+        user: videoUser
     })
 
     return { chatClient, videoClient }

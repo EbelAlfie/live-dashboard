@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField } from "./TextField";
 import { useState } from "react";
 import { validatePassword, validateUserName } from "../../../utils/formUtil";
+import { UserModel } from "../../../model/UserModel";
 
 export default function InputSection() {
     const [userName, setUserName] = useState("")
@@ -17,13 +18,16 @@ export default function InputSection() {
 				return 
 			}
 
+			let userModel: UserModel = {
+				name: userName,
+				id: userName
+			}
+
 			navCon(
 				"/dashboard", 
 				{
 					replace: true,
-					state: {
-						user: userName
-					}
+					state: userModel
 				}
 			)
 			return
