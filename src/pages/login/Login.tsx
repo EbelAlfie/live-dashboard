@@ -1,10 +1,10 @@
-import { AppBar } from "../../component/AppBar";
+import { AppBar } from "../../component/header/AppBar";
 import InputSection from "./components/InputSection";
 import { WelcomeBanner } from "./components/MiscDesc";
 
 function LoginContent() {
     return (
-        <div className="row">
+        <div className="row login-page">
             <InputSection />
             <WelcomeBanner />
         </div>

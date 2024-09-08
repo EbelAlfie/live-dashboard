@@ -7,20 +7,18 @@ export default function InputSection() {
 
     return (
 			<>
-				<div className="container d-flex justify-content-center align-items-center vh-100">
-					<div className="col">
+				<div className="col d-flex justify-content-center align-items-center">
 						<form>
-							<div className="row m-4">
-								<TextField text={userName} onTextChange={(arg: string) => {setUserName(arg)}}/>
+							<div className="row m-2">
+								<TextField inputLabel="User Name" text={userName} onTextChange={(arg: string) => {setUserName(arg)}}/>
 							</div>
-							<div className="row m-4">
-								<TextField text={password} onTextChange={(arg: string) => {setPassword(arg)}}/>
+							<div className="row m-2">
+								<TextField inputLabel="Password" text={password} onTextChange={(arg: string) => {setPassword(arg)}}/>
 							</div>
 							<div className="row">
 								<button className="btn btn-primary">Submit</button>
 							</div>
 						</form>
-					</div>
 				</div>
 			</>
     )
