@@ -1,6 +1,6 @@
 import { AppBar } from "../../component/header/AppBar";
 import InputSection from "./components/InputSection";
-import { WelcomeBanner } from "./components/MiscDesc";
+import { WelcomeBanner } from "./components/WelcomeBanner";
 
 function LoginContent() {
     return (
