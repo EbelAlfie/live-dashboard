@@ -9,7 +9,7 @@ export function AppBar() {
 					<img src={logo} className="App-logo" alt="app logo" />
 				</div>
 				<div className="col-sm-auto">
-					<HeaderText text="oejorjre" />
+					<HeaderText text="Live Dashboard" />
 				</div>
 			</header>
         </>
