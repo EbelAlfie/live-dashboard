@@ -1,11 +1,11 @@
-import { Col, Row } from "react-bootstrap";
+import logo from "../logo.svg"
 
 export function AppBar() {
     return (
         <>
-            <Row>
-                <img src="logo.svg"></img>
-            </Row>
+            <div className="row m-5 bg-primary">
+                <img src={logo} className="w-10 App-logo" alt="app logo"></img>
+            </div>
         </>
     )
 }
