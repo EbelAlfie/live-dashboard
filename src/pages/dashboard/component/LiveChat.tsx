@@ -1,10 +1,12 @@
-import { MessageInput, MessageList } from "stream-chat-react"
+import { Channel, MessageInput, MessageList } from "stream-chat-react"
 
 const LiveChat: React.FC = () => {
     return (
         <>
-            <MessageList />
-            <MessageInput />
+            <Channel>
+                <MessageList />
+                <MessageInput />
+            </Channel> 
         </>
     )
 }

@@ -1,11 +1,10 @@
 import { useLocation } from "react-router-dom"
 import { useStreamClient } from "../../../hooks/StreamHook"
 import { UserModel } from "../../../model/UserModel"
-import { LiveStream } from "./LiveStream"
 import { LiveChat } from "./LiveChat"
-import { StreamCall, StreamVideo, StreamVideoClient } from "@stream-io/video-react-sdk"
+import { StreamCall, StreamVideo } from "@stream-io/video-react-sdk"
 import { Chat } from "stream-chat-react"
-import { StreamChat } from "stream-chat"
+import { LiveStream } from "./LiveStream"
 
 const DashBoardContent: React.FC = () => {
     let extras = useLocation()
@@ -21,7 +20,7 @@ const DashBoardContent: React.FC = () => {
                 <Chat client={clients.chatClient}>
                     <div className="row vw-100">
                         <div className="col">
-                            <LiveStream />
+                            <LiveStream type={"livestream"} id={"test-live"}/>a
                         </div>
                         <div className="col">
                             <LiveChat />

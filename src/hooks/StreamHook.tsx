@@ -1,43 +1,63 @@
-import { StreamChat, UserResponse } from "stream-chat"
-import { useCreateChatClient } from "stream-chat-react"
+import { Channel, StreamChat, UserResponse } from "stream-chat"
 import { UserModel } from "../model/UserModel"
-import { StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
-import { useEffect, useState } from "react"
+import { Call, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
+import { useEffect } from "react"
 
-const useStreamClient = (user: UserModel) => {
+type Loading = "loading"
+type Ready = {
+    chatClient: StreamChat,
+    videoClient: StreamVideoClient,
+    chat: Channel,
+    call: Call
+}
+type Failed = "failed"
+
+export const useStreamClient = (user: UserModel) => {
     let chatUser: UserResponse = {
         id: user.id,
         username: user.name
     }
-    let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
-    let token: string = process.env.REACT_APP_CACING_TOKEN || ""
-
-    let chatClient = new StreamChat(apiKey)
-    // let chatClient = useCreateChatClient({
-    //     apiKey: apiKey,
-    //     tokenOrProvider: token,
-    //     userData: chatUser
-    // })
-
     let videoUser: UserRequest = {
         id: user.name,
         name: user.name
     }
+
+    let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
+    let token: string = process.env.REACT_APP_CACING_TOKEN || ""
+    
+    let chatClient = new StreamChat(apiKey)
+
     let videoClient = StreamVideoClient.getOrCreateInstance({
         apiKey: apiKey,
         token: token,
         user: videoUser
     })
 
+    const type = "livestream"
+    const id = "test-live"
+
     useEffect(() => {
-        const connectUser = chatClient
-        .connectUser(chatUser, token)
+        chatClient.connectUser(chatUser, token)
         .catch((e) => {
             console.error(`erorr ${e}`);
         })
     }, [chatClient])
 
-    return { chatClient, videoClient}
-}
+    // useEffect(() => {
+    //     if (chatClient == null) return
+    //     console.log("chat client init")
 
-export { useStreamClient }
+    //     setChat(chatClient.channel(type, id))
+
+    // }, [chatClient])
+
+    // useEffect(() => {
+    //     if (videoClient == null) return
+    //     console.log("video client init")
+
+    //     setCall(videoClient.call(type, id))
+
+    // }, [videoClient])
+
+    return { chatClient, videoClient }
+}

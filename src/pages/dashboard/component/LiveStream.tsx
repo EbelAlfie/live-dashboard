@@ -1,9 +1,14 @@
 import { LivestreamPlayer } from "@stream-io/video-react-sdk"
 
-const LiveStream: React.FC = () => {
+type LiveVideoProps = {
+    type: string,
+    id: string
+}
+
+const LiveStream: React.FC<LiveVideoProps> = (props) => {
     return (
         <>
-            <LivestreamPlayer callType="livestream" callId="call-id"/>
+            <LivestreamPlayer callType={props.type} callId={props.id}/>
         </>
     )
 }
