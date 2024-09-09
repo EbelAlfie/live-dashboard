@@ -1,14 +1,24 @@
-import { LivestreamPlayer } from "@stream-io/video-react-sdk"
+import { Call, LivestreamLayout, LivestreamLayoutProps, LivestreamPlayer, StreamCall, StreamTheme } from "@stream-io/video-react-sdk"
+import { CustomLiveLayout } from "./CustomLiveLayout"
 
 type LiveVideoProps = {
-    type: string,
-    id: string
+    call: Call
 }
 
 const LiveStream: React.FC<LiveVideoProps> = (props) => {
+    const liveConfig: LivestreamLayoutProps = {
+        showParticipantCount : true,
+        showDuration : true,
+        showLiveBadge: true,
+        enableFullScreen: true
+    }
     return (
         <>
-            <LivestreamPlayer callType={props.type} callId={props.id}/>
+            <StreamTheme style={{color: "white"}}>
+                <StreamCall call={props.call}>
+                    <CustomLiveLayout />
+                </StreamCall>
+            </StreamTheme>
         </>
     )
 }

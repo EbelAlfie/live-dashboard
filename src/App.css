@@ -1,3 +1,6 @@
+@import '~stream-chat-react/dist/css/v2/index.css';
+@import '~stream-chat-react/dist/css/v2/index.layout.css';
+
 .App-logo {
   height: 10vmin;
   pointer-events: none;

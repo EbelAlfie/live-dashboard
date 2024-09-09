@@ -2,8 +2,8 @@ import { useLocation } from "react-router-dom"
 import { useStreamClient } from "../../../hooks/StreamHook"
 import { UserModel } from "../../../model/UserModel"
 import { LiveChat } from "./LiveChat"
-import { StreamCall, StreamVideo } from "@stream-io/video-react-sdk"
-import { Chat } from "stream-chat-react"
+import { StreamVideo } from "@stream-io/video-react-sdk"
+import { Chat, CustomClasses } from "stream-chat-react"
 import { LiveStream } from "./LiveStream"
 
 const DashBoardContent: React.FC = () => {
@@ -12,18 +12,23 @@ const DashBoardContent: React.FC = () => {
         name: extras.state.name,
         id: extras.state.id
     }
-    const clients = useStreamClient(user)
+
+    let { chatClient, videoClient, chat, call } = useStreamClient(user)
 
     return (
         <>
-            <StreamVideo client={clients.videoClient} >
-                <Chat client={clients.chatClient}>
-                    <div className="row vw-100">
-                        <div className="col">
-                            <LiveStream type={"livestream"} id={"test-live"}/>a
+            <StreamVideo client={videoClient}>
+                <Chat client={chatClient}>
+                    <div className="row vh-100 vw-100">
+                        <div className="col-sm-auto">
+                            {call &&
+                                <LiveStream call={call}/>
+                            }
                         </div>
-                        <div className="col">
-                            <LiveChat />
+                        <div className="col-sm-auto">
+                            {chat &&
+                                <LiveChat channel={chat}/>
+                            }
                         </div>
                     </div>
                 </Chat>

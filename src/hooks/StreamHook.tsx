@@ -1,7 +1,7 @@
 import { Channel, StreamChat, UserResponse } from "stream-chat"
 import { UserModel } from "../model/UserModel"
 import { Call, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 type Loading = "loading"
 type Ready = {
@@ -25,7 +25,7 @@ export const useStreamClient = (user: UserModel) => {
     let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
     let token: string = process.env.REACT_APP_CACING_TOKEN || ""
     
-    let chatClient = new StreamChat(apiKey)
+    let chatClient = StreamChat.getInstance(apiKey)
 
     let videoClient = StreamVideoClient.getOrCreateInstance({
         apiKey: apiKey,
@@ -33,31 +33,39 @@ export const useStreamClient = (user: UserModel) => {
         user: videoUser
     })
 
+    let [chat, setChat] = useState<Channel|null>(null)
+    let [call, setCall] = useState<Call|null>(null)
+
     const type = "livestream"
     const id = "test-live"
 
     useEffect(() => {
+        const createChatRoom = () => {
+            let channel = chatClient.channel(type, id)
+            setChat(channel)
+        }
+
         chatClient.connectUser(chatUser, token)
         .catch((e) => {
-            console.error(`erorr ${e}`);
+            console.error(`erorr ${e}`)
+            createChatRoom()
         })
+        return () => {
+            chatClient.disconnectUser() 
+            setChat(null)
+        }
     }, [chatClient])
 
-    // useEffect(() => {
-    //     if (chatClient == null) return
-    //     console.log("chat client init")
-
-    //     setChat(chatClient.channel(type, id))
-
-    // }, [chatClient])
-
-    // useEffect(() => {
-    //     if (videoClient == null) return
-    //     console.log("video client init")
-
-    //     setCall(videoClient.call(type, id))
-
-    // }, [videoClient])
-
-    return { chatClient, videoClient }
+    useEffect(() => {
+        let videoCall = videoClient.call(type, id)
+        videoCall.create()
+        .then(result => {
+            setCall(videoCall)
+        }) 
+        return () => {
+            call?.endCall()
+            setCall(null)
+        }
+    }, [videoClient])
+    return { chatClient, videoClient, chat, call }
 }
