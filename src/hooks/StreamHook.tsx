@@ -1,7 +1,8 @@
-import { UserResponse } from "stream-chat"
+import { StreamChat, UserResponse } from "stream-chat"
 import { useCreateChatClient } from "stream-chat-react"
 import { UserModel } from "../model/UserModel"
 import { StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
+import { useEffect, useState } from "react"
 
 const useStreamClient = (user: UserModel) => {
     let chatUser: UserResponse = {
@@ -11,11 +12,12 @@ const useStreamClient = (user: UserModel) => {
     let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
     let token: string = process.env.REACT_APP_CACING_TOKEN || ""
 
-    let chatClient = useCreateChatClient({
-        apiKey: apiKey,
-        tokenOrProvider: token,
-        userData: chatUser
-    })
+    let chatClient = new StreamChat(apiKey)
+    // let chatClient = useCreateChatClient({
+    //     apiKey: apiKey,
+    //     tokenOrProvider: token,
+    //     userData: chatUser
+    // })
 
     let videoUser: UserRequest = {
         id: user.name,
@@ -27,7 +29,15 @@ const useStreamClient = (user: UserModel) => {
         user: videoUser
     })
 
-    return { chatClient, videoClient }
+    useEffect(() => {
+        const connectUser = chatClient
+        .connectUser(chatUser, token)
+        .catch((e) => {
+            console.error(`erorr ${e}`);
+        })
+    }, [chatClient])
+
+    return { chatClient, videoClient}
 }
 
 export { useStreamClient }
