@@ -1,7 +1,22 @@
-const LiveBadge: React.FC = () => {
+
+type BadgeProps = {
+    isLive: boolean,
+    participants: number
+}
+
+const LiveBadge: React.FC<BadgeProps> = (props) => {
     return (
         <>
-            <h1></h1>
+            <div className="row">
+                <div className="col">
+                    <h4>Live</h4>
+                </div>
+                <div className="col">
+                    <p>{props.participants}</p>
+                </div>
+            </div>
         </>
     )
 }
+
+export { LiveBadge }
