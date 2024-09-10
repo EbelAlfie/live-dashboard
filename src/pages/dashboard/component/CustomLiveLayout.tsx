@@ -1,11 +1,20 @@
-import { LivestreamLayout, useCall, useCallStateHooks } from "@stream-io/video-react-sdk"
+import { LivestreamLayout, useCall } from "@stream-io/video-react-sdk"
+import { useEffect } from "react"
 
 const CustomLiveLayout: React.FC = () => {
     let call = useCall()
 
-    let callState = useCallStateHooks()
+    //let callState = useCallStateHooks()
 
-    let remoteParticipants = callState.useRemoteParticipants()
+    //let remoteParticipants = callState.useRemoteParticipants()
+
+    useEffect(() => {
+        call?.join({create: true})
+
+        return () => {
+            call?.leave()
+        }
+    })
 
     return (
         <>

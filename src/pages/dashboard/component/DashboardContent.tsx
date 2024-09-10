@@ -19,7 +19,7 @@ const DashBoardContent: React.FC = () => {
         <>
             <StreamVideo client={videoClient}>
                 <Chat client={chatClient}>
-                    <div className="row vh-100 vw-100">
+                    <div className="row">
                         <div className="col-sm-auto">
                             {call &&
                                 <LiveStream call={call}/>
