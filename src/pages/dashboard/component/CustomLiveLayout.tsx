@@ -1,4 +1,4 @@
-import { LivestreamLayout, useCall } from "@stream-io/video-react-sdk"
+import { LivestreamLayout, LivestreamLayoutProps, useCall } from "@stream-io/video-react-sdk"
 import { useEffect } from "react"
 
 const CustomLiveLayout: React.FC = () => {
@@ -10,6 +10,12 @@ const CustomLiveLayout: React.FC = () => {
 
     useEffect(() => {
         call?.join({create: true})
+        .then(result => {
+            call?.camera.enable()
+        })
+        .catch(error => {
+            console.log(`error ${error}`)
+        })
 
         return () => {
             call?.leave()
@@ -19,7 +25,7 @@ const CustomLiveLayout: React.FC = () => {
     return (
         <>
             <div className="container">
-                <LivestreamLayout />
+                <LivestreamLayout showParticipantCount={false} showLiveBadge={false}/>
             </div>
         </>
     )

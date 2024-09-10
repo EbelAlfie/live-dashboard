@@ -2,6 +2,7 @@ import { Channel, StreamChat, UserResponse } from "stream-chat"
 import { UserModel } from "../model/UserModel"
 import { Call, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
 import { useEffect, useState } from "react"
+import { useCreateChatClient } from "stream-chat-react"
 
 type Loading = "loading"
 type Ready = {
@@ -42,13 +43,18 @@ export const useStreamClient = (user: UserModel) => {
     useEffect(() => {
         const createChatRoom = () => {
             let channel = chatClient.channel(type, id)
-            setChat(channel)
+            channel.create()
+            .then(result => {
+                setChat(channel)
+            })
         }
 
         chatClient.connectUser(chatUser, token)
+        .then(result => {
+            createChatRoom()
+        })
         .catch((e) => {
             console.error(`erorr ${e}`)
-            createChatRoom()
         })
         return () => {
             chatClient.disconnectUser() 

@@ -5,7 +5,9 @@ export default function DashBoardScreen() {
     return (
         <>
             <AppBar />
-            <DashBoardContent />
+            <div className="page-content">
+                <DashBoardContent />
+            </div>
         </>
     )
 }

@@ -6,12 +6,6 @@ type LiveVideoProps = {
 }
 
 const LiveStream: React.FC<LiveVideoProps> = (props) => {
-    const liveConfig: LivestreamLayoutProps = {
-        showParticipantCount : true,
-        showDuration : true,
-        showLiveBadge: true,
-        enableFullScreen: true
-    }
     return (
         <>
             <StreamTheme style={{color: "white"}}>

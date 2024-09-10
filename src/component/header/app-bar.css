@@ -1,4 +1,6 @@
 .app-bar {
+    width: 100vw;
+    height: 100px;
     background-color: rgba(22, 24, 35, 1);
     font-size: calc(10px + 2vmin);
     color: white;
