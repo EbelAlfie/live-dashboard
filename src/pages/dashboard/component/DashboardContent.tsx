@@ -3,7 +3,7 @@ import { useStreamClient } from "../../../hooks/StreamHook"
 import { UserModel } from "../../../model/UserModel"
 import { LiveChat } from "./LiveChat"
 import { StreamVideo } from "@stream-io/video-react-sdk"
-import { Chat, CustomClasses } from "stream-chat-react"
+import { Chat } from "stream-chat-react"
 import { LiveStream } from "./LiveStream"
 
 const DashBoardContent: React.FC = () => {

@@ -2,16 +2,6 @@ import { Channel, StreamChat, UserResponse } from "stream-chat"
 import { UserModel } from "../model/UserModel"
 import { Call, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
 import { useEffect, useState } from "react"
-import { useCreateChatClient } from "stream-chat-react"
-
-type Loading = "loading"
-type Ready = {
-    chatClient: StreamChat,
-    videoClient: StreamVideoClient,
-    chat: Channel,
-    call: Call
-}
-type Failed = "failed"
 
 export const useStreamClient = (user: UserModel) => {
     let chatUser: UserResponse = {
@@ -60,7 +50,7 @@ export const useStreamClient = (user: UserModel) => {
             chatClient.disconnectUser() 
             setChat(null)
         }
-    }, [chatClient])
+    }, [chatClient, chat, token])
 
     useEffect(() => {
         let videoCall = videoClient.call(type, id)
@@ -72,6 +62,7 @@ export const useStreamClient = (user: UserModel) => {
             call?.endCall()
             setCall(null)
         }
-    }, [videoClient])
+    }, [videoClient, call])
+    
     return { chatClient, videoClient, chat, call }
 }

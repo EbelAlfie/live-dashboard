@@ -1,4 +1,4 @@
-import { Call, LivestreamLayout, LivestreamLayoutProps, LivestreamPlayer, StreamCall, StreamTheme } from "@stream-io/video-react-sdk"
+import { Call, StreamCall, StreamTheme } from "@stream-io/video-react-sdk"
 import { CustomLiveLayout } from "./CustomLiveLayout"
 
 type LiveVideoProps = {

@@ -1,4 +1,4 @@
-import { LivestreamLayout, useCall, useCallStateHooks, useStreamVideoClient } from "@stream-io/video-react-sdk"
+import { CallingState, LivestreamLayout, useCall, useCallStateHooks, useStreamVideoClient } from "@stream-io/video-react-sdk"
 import { useEffect } from "react"
 
 const CustomLiveLayout: React.FC = () => {
@@ -22,13 +22,11 @@ const CustomLiveLayout: React.FC = () => {
         })
 
         return () => {
-            call?.leave()
-            call?.endCall()
+            if (call?.state.callingState !== CallingState.LEFT) {
+                call?.leave()
+            }
         }
-    }, [])
-
-    console.log(ingress?.rtmp.address)
-    console.log(client?.streamClient.tokenManager.getToken())
+    }, [call])
 
     return (
         <>
