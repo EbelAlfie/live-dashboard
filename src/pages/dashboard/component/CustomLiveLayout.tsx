@@ -1,15 +1,11 @@
 import { CallingState, LivestreamLayout, useCall, useCallStateHooks, useStreamVideoClient } from "@stream-io/video-react-sdk"
 import { useEffect } from "react"
+import { IngressComponent } from "./IngresComponent"
 
 const CustomLiveLayout: React.FC = () => {
     let call = useCall()
-
-    //let client = useStreamVideoClient()
     
     // let callState = useCallStateHooks()
-
-    // let ingress = callState.useCallIngress()
-
     //let remoteParticipants = callState.useRemoteParticipants()
 
     useEffect(() => {
@@ -32,15 +28,12 @@ const CustomLiveLayout: React.FC = () => {
 
     return (
         <>
-            <div className="col container login-page">
+            <div className="col container">
                 <div className="row">
                     <LivestreamLayout showParticipantCount={false} showLiveBadge={false}/>
                 </div>
-                <div className="row">
-                    {/* <h1>{ingress && ingress.rtmp.address}</h1> */}
-                </div>
-                <div className="row">
-                    {/* <h1>{client && client.streamClient.tokenManager.getToken()}</h1> */}
+                <div className="row m-2">
+                    <IngressComponent />
                 </div>
             </div>
         </>

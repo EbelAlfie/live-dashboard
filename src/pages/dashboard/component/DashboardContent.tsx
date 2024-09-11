@@ -5,6 +5,7 @@ import { LiveChat } from "./LiveChat"
 import { StreamVideo } from "@stream-io/video-react-sdk"
 import { Chat } from "stream-chat-react"
 import { LiveStream } from "./LiveStream"
+import { ControlHeader } from "./ControlHeader"
 
 const DashBoardContent: React.FC = () => {
     let extras = useLocation()
@@ -15,10 +16,16 @@ const DashBoardContent: React.FC = () => {
 
     let { chatClient, videoClient, chat, call } = useStreamClient(user)
 
+    if (!chatClient)
+        return <>
+            <h1>Loading...</h1>
+        </>
+
     return (
         <>
             <StreamVideo client={videoClient}>
                 <Chat client={chatClient}>
+                    <ControlHeader />
                     <section className="row">
                         <div className="col">
                             {call &&

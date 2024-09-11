@@ -1,5 +1,6 @@
 import { Call, StreamCall, StreamTheme } from "@stream-io/video-react-sdk"
 import { CustomLiveLayout } from "./CustomLiveLayout"
+import { IngressComponent } from "./IngresComponent"
 
 type LiveVideoProps = {
     call: Call

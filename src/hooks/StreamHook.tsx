@@ -16,61 +16,61 @@ export const useStreamClient = (user: UserModel) => {
     let apiKey: string = process.env.REACT_APP_STREAM_KEY || ""
     let token: string = process.env.REACT_APP_CACING_TOKEN || ""
     
-    let chatClient = StreamChat.getInstance(apiKey)
-
+    let [chatClient, setChatClient] = useState<StreamChat>()
     let videoClient = StreamVideoClient.getOrCreateInstance({
         apiKey: apiKey,
         token: token,
         user: videoUser
     })
 
+    const type = "livestream"
+    const id = "test-live"
+    
     let [chat, setChat] = useState<Channel>()
     let [call, setCall] = useState<Call>()
 
-    const type = "livestream"
-    const id = "test-live"
+    useEffect(() => {
+        if (chatClient) return 
+        console.log("init chat client")
+        let client = StreamChat.getInstance(apiKey)
+        client.connectUser(chatUser, token)
+        .then(result => {
+            console.log("login success")
+            setChatClient(client)
+        })
+        .catch(error => {
+            console.log(`Login failed ${error}`)
+        })
+    }, [chatClient])
 
     useEffect(() => {
-        const createChatRoom = async () => {
-            let channel = chatClient.channel(type, id)
-            channel.create()
-            .then(result => {
-                setChat(channel)
-            }).catch(error => {
-                console.log(error)
-            })
-        }
-        chatClient.connectUser(chatUser, token)
-        .then(result => {
-            console.log("SUCCESSSS")
-            createChatRoom()
-        })
-        .catch((e) => {
-            console.error(`erorr ${e}`)
-            setChat(undefined)
-        })
-
+        console.log("dispose chat client")
         return () => {
-            setChat(undefined) 
+            chatClient?.disconnectUser()
         }
     }, [chatClient])
 
     useEffect(() => {
-        let videoCall = videoClient.call(type, id)
-        videoCall.create()
-            .then(result => {
-                setCall(videoCall)
-            }).catch(error => {
-                setCall(undefined)
-            }) 
-
-            return () => {
-                if (call?.state.callingState !== CallingState.LEFT) {
-                    call?.leave()
-                    setCall(undefined)
-                }
-            }
-    }, [videoClient])
+        if (!chatClient) return 
+        if (chat) return
+        console.log("init chat room")
+        let channel = chatClient.channel(type, id)
+        channel.create()
+        .then(result => {
+            console.log("success create channel")
+            setChat(channel)
+        })
+        .catch(error => {
+            console.log(`Failed create channel ${error}`)
+        })
+    }, [chatClient, chat])
+    
+    useEffect(() => {
+        if (call) return 
+        console.log("init call")
+        let video = videoClient.call(type, id)
+        setCall(video) 
+    }, [call])
     
     return { chatClient, videoClient, chat, call }
 }

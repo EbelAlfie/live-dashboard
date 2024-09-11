@@ -3,11 +3,16 @@
 
 .App-logo {
   height: 10vmin;
-  pointer-events: none;
 }
 
 .page-content {
+  background-color: black;
   padding-top: 100px;
+}
+
+.default-divider {
+  background-color: rgb(57, 193, 243);
+  height: 4px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
