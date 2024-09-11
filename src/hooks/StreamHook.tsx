@@ -1,6 +1,6 @@
 import { Channel, StreamChat, UserResponse } from "stream-chat"
 import { UserModel } from "../model/UserModel"
-import { Call, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
+import { Call, CallingState, StreamVideoClient, UserRequest } from "@stream-io/video-react-sdk"
 import { useEffect, useState } from "react"
 
 export const useStreamClient = (user: UserModel) => {
@@ -24,8 +24,8 @@ export const useStreamClient = (user: UserModel) => {
         user: videoUser
     })
 
-    let [chat, setChat] = useState<Channel|null>(null)
-    let [call, setCall] = useState<Call|null>(null)
+    let [chat, setChat] = useState<Channel>()
+    let [call, setCall] = useState<Call>()
 
     const type = "livestream"
     const id = "test-live"
@@ -36,33 +36,41 @@ export const useStreamClient = (user: UserModel) => {
             channel.create()
             .then(result => {
                 setChat(channel)
+            }).catch(error => {
+                console.log(error)
             })
         }
 
         chatClient.connectUser(chatUser, token)
-        .then(result => {
-            createChatRoom()
-        })
-        .catch((e) => {
-            console.error(`erorr ${e}`)
-        })
+            .then(result => {
+                createChatRoom()
+            })
+            .catch((e) => {
+                console.error(`erorr ${e}`)
+                setChat(undefined)
+            })
         return () => {
             chatClient.disconnectUser() 
-            setChat(null)
+            setChat(undefined)
         }
-    }, [chatClient, chat, token])
+    }, [chatClient])
 
     useEffect(() => {
         let videoCall = videoClient.call(type, id)
         videoCall.create()
-        .then(result => {
-            setCall(videoCall)
-        }) 
-        return () => {
-            call?.endCall()
-            setCall(null)
-        }
-    }, [videoClient, call])
+            .then(result => {
+                setCall(videoCall)
+            }).catch(error => {
+                setCall(undefined)
+            }) 
+
+            return () => {
+                if (call?.state.callingState !== CallingState.LEFT) {
+                    call?.leave()
+                    setCall(undefined)
+                }
+            }
+    }, [videoClient])
     
     return { chatClient, videoClient, chat, call }
 }

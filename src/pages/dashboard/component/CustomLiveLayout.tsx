@@ -4,21 +4,23 @@ import { useEffect } from "react"
 const CustomLiveLayout: React.FC = () => {
     let call = useCall()
 
-    let client = useStreamVideoClient()
+    //let client = useStreamVideoClient()
     
-    let callState = useCallStateHooks()
+    // let callState = useCallStateHooks()
 
-    let ingress = callState.useCallIngress()
+    // let ingress = callState.useCallIngress()
 
     //let remoteParticipants = callState.useRemoteParticipants()
 
     useEffect(() => {
+
         call?.join({create: true})
         .then(result => {
             call?.camera.enable()
+            console.log(`Success ${result}`)
         })
         .catch(error => {
-            console.log(`error ${error}`)
+            console.log(`ERRORRRRR ${error}`)
         })
 
         return () => {
@@ -35,10 +37,10 @@ const CustomLiveLayout: React.FC = () => {
                     <LivestreamLayout showParticipantCount={false} showLiveBadge={false}/>
                 </div>
                 <div className="row">
-                    <h1>{ingress && ingress.rtmp.address}</h1>
+                    {/* <h1>{ingress && ingress.rtmp.address}</h1> */}
                 </div>
                 <div className="row">
-                    <h1>{client && client.streamClient.tokenManager.getToken()}</h1>
+                    {/* <h1>{client && client.streamClient.tokenManager.getToken()}</h1> */}
                 </div>
             </div>
         </>
