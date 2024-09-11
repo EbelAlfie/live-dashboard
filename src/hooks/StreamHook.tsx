@@ -31,30 +31,28 @@ export const useStreamClient = (user: UserModel) => {
     const id = "test-live"
 
     useEffect(() => {
-        if (!chatClient.user) return 
-
-        let channel = chatClient.channel(type, id)
-        channel.create()
-        .then(result => {
-            setChat(channel)
-        }).catch(error => {
-            console.log(error)
-        })
-
-        return () => {
-            setChat(undefined)
+        const createChatRoom = async () => {
+            let channel = chatClient.channel(type, id)
+            channel.create()
+            .then(result => {
+                setChat(channel)
+            }).catch(error => {
+                console.log(error)
+            })
         }
-    }, [chatClient.user])
-
-    useEffect(() => {
         chatClient.connectUser(chatUser, token)
         .then(result => {
             console.log("SUCCESSSS")
+            createChatRoom()
         })
         .catch((e) => {
             console.error(`erorr ${e}`)
             setChat(undefined)
         })
+
+        return () => {
+            setChat(undefined) 
+        }
     }, [chatClient])
 
     useEffect(() => {
