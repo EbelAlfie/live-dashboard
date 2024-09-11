@@ -9,10 +9,10 @@ const LiveBadge: React.FC<BadgeProps> = (props) => {
         <>
             <div className="row">
                 <div className="col">
-                    <h4>Live</h4>
+                    <p>{props.participants}</p>
                 </div>
                 <div className="col">
-                    <p>{props.participants}</p>
+                    <h4>Live</h4>
                 </div>
             </div>
         </>
