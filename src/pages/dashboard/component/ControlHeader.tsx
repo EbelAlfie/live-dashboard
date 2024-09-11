@@ -16,7 +16,7 @@ const ControlHeader: React.FC = () => {
 
     return (
         <>
-            <div className="row pt-2 pe-2 ps-2 pb-0 align-items-end vw-100">
+            <div className="row ps-2 pe-2 align-items-end vw-100">
                 <div className="col-md align-self-center">
                     <textarea value={inputTitle} onChange={(input) => {onTitleChanged(input.target.value)}} placeholder="Judul Live"></textarea>
                 </div>
@@ -24,7 +24,7 @@ const ControlHeader: React.FC = () => {
                     <button className="btn btn-primary" onClick={startLive}>Mulai live</button>
                 </div>
             </div>
-            <hr className="default-divider"/>
+            <hr className="default-divider m-0"/>
         </>
     )
 
