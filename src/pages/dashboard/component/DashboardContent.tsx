@@ -1,11 +1,11 @@
 import { useLocation } from "react-router-dom"
 import { useStreamClient } from "../../../hooks/StreamHook"
 import { UserModel } from "../../../model/UserModel"
-import { LiveChat } from "./LiveChat"
 import { StreamVideo } from "@stream-io/video-react-sdk"
 import { Chat } from "stream-chat-react"
 import { LiveStream } from "./LiveStream"
 import { ControlHeader } from "./ControlHeader"
+import { LiveChat } from "../../../component/chat/LiveChat"
 
 const DashBoardContent: React.FC = () => {
     let extras = useLocation()
